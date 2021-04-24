@@ -33,5 +33,5 @@ public class Permission implements Serializable {
     
     private Integer albumId;
     private Integer userId;
-    private String typePermissionId;
+    private Integer typePermissionId;
 }

@@ -22,5 +22,6 @@ public class PermissionDTO {
     private Integer id;
     private Integer albumId;
     private Integer userId;
-    private String typePermissionId;
+    private Integer typePermissionId;
+    private String typePermission;
 }

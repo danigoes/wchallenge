@@ -14,4 +14,5 @@ import com.wolox.wchallenge.dto.PermissionDTO;
 public interface PermissionService {
     
     PermissionDTO createPermissionSharedAlbum(PermissionDTO permission);
+    PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission);
 }

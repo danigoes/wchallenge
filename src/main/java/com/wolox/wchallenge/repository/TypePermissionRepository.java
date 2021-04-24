@@ -15,5 +15,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TypePermissionRepository extends JpaRepository<TypePermission, Integer> {
-    
 }

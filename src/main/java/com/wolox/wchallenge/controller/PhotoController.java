@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,18 @@ public class PhotoController {
     @GetMapping()
     public ResponseEntity<List<PhotoDTO>> getPhotos() {
         List<PhotoDTO> response = this.photoService.getPhotos();
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/byAlbumId/{albumId}")
+    public ResponseEntity<List<PhotoDTO>> getPhotosByAlbumId(@PathVariable("albumId") String albumId) {
+        List<PhotoDTO> response = this.photoService.getPhotos();
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/byUserId/{userId}")
+    public ResponseEntity<List<PhotoDTO>> getPhotosByUserId(@PathVariable("userId") String userId) {
+        List<PhotoDTO> response = this.photoService.getPhotosByUserId(userId);
         return ResponseEntity.ok(response);
     }
 }

@@ -5,8 +5,11 @@
  */
 package com.wolox.wchallenge.service.implementation;
 
+import com.wolox.wchallenge.dto.AlbumDTO;
 import com.wolox.wchallenge.dto.PhotoDTO;
+import com.wolox.wchallenge.service.AlbumService;
 import com.wolox.wchallenge.service.PhotoService;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class PhotoServiceImpl implements PhotoService {
     @Autowired
     private RestTemplate restTemplate;
     
+    @Autowired
+    private AlbumService albumService;
+    
     private static final String PHOTOS_URL = "https://jsonplaceholder.typicode.com/photos";
     
     @Override
@@ -34,6 +40,28 @@ public class PhotoServiceImpl implements PhotoService {
         headers.add("user-agent", "Application");
 	HttpEntity<String> entity = new HttpEntity<>(headers);
         List<PhotoDTO> response = Arrays.asList(restTemplate.exchange(PHOTOS_URL, HttpMethod.GET, entity, PhotoDTO[].class).getBody());
+        return response;
+    }
+
+    @Override
+    public List<PhotoDTO> getPhotosByAlbumId(String albumId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("user-agent", "Application");
+	HttpEntity<String> entity = new HttpEntity<>(headers);
+        String urlAux = PHOTOS_URL + "?albumId=" + albumId;
+        List<PhotoDTO> response = Arrays.asList(restTemplate.exchange(urlAux, HttpMethod.GET, entity, PhotoDTO[].class).getBody());
+        return response;
+    }
+
+    @Override
+    public List<PhotoDTO> getPhotosByUserId(String userId) {
+        List<PhotoDTO> response = new ArrayList();
+        List<AlbumDTO> albums = albumService.getAlbumsByUserId(userId);
+        albums.stream().map((album) -> this.getPhotosByAlbumId(album.getId().toString())).forEachOrdered((photos) -> {
+            photos.forEach((photo) -> {
+                response.add(photo);
+            });
+        });
         return response;
     }
     

@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface PhotoService {
     List<PhotoDTO> getPhotos();
+    List<PhotoDTO> getPhotosByAlbumId(String albumId);
+    List<PhotoDTO> getPhotosByUserId(String userId);
 }

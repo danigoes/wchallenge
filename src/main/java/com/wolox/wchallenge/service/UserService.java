@@ -5,10 +5,14 @@
  */
 package com.wolox.wchallenge.service;
 
+import com.wolox.wchallenge.dto.UserDTO;
+import java.util.List;
+
 /**
  *
  * @author Daniela
  */
 public interface UserService {
     
+    List<UserDTO> getUsers();
 }

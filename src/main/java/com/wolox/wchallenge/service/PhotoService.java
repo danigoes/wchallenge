@@ -5,10 +5,13 @@
  */
 package com.wolox.wchallenge.service;
 
+import com.wolox.wchallenge.dto.PhotoDTO;
+import java.util.List;
+
 /**
  *
  * @author Daniela
  */
 public interface PhotoService {
-    
+    List<PhotoDTO> getPhotos();
 }

@@ -5,8 +5,16 @@
  */
 package com.wolox.wchallenge.service.implementation;
 
+import com.wolox.wchallenge.dto.UserDTO;
 import com.wolox.wchallenge.service.UserService;
+import java.util.Arrays;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -14,5 +22,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private RestTemplate restTemplate;
+    
+    public static final String USERS_URL = "https://jsonplaceholder.typicode.com/users";//"https://jsonplaceholder.cypress.io/users";//
+    
+    @Override
+    public List<UserDTO> getUsers() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("user-agent", "Application");
+	HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<UserDTO> response = Arrays.asList(restTemplate.exchange(USERS_URL, HttpMethod.GET, entity, UserDTO[].class).getBody());
+        return response;
+    } 
     
 }

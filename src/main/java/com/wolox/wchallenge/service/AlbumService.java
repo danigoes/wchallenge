@@ -15,4 +15,5 @@ import java.util.List;
 public interface AlbumService {
     List<AlbumDTO> getAlbums();
     List<AlbumDTO> getAlbumsByUserId(String userId);
+    AlbumDTO getAlbumById(String albumId);
 }

@@ -6,6 +6,7 @@
 package com.wolox.wchallenge.repository;
 
 import com.wolox.wchallenge.model.Permission;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, Integer> {
+    List<Permission> findByAlbumIdAndTypePermissionId(Integer albumId, Integer typePermissionId);
 }

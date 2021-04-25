@@ -6,6 +6,8 @@
 package com.wolox.wchallenge.service;
 
 import com.wolox.wchallenge.dto.PermissionDTO;
+import com.wolox.wchallenge.dto.UserDTO;
+import java.util.List;
 
 /**
  *
@@ -15,4 +17,5 @@ public interface PermissionService {
     
     PermissionDTO createPermissionSharedAlbum(PermissionDTO permission);
     PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission);
+    List<UserDTO> getUsersByTypePermissionIdAndAlbumId(Integer typePermissionId, Integer albumId); 
 }

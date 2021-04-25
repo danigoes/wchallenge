@@ -46,5 +46,15 @@ public class AlbumServiceImpl implements AlbumService {
         List<AlbumDTO> response = Arrays.asList(restTemplate.exchange(urlAux, HttpMethod.GET, entity, AlbumDTO[].class).getBody());
         return response;
     }
+
+    @Override
+    public AlbumDTO getAlbumById(String albumId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("user-agent", "Application");
+	HttpEntity<String> entity = new HttpEntity<>(headers);
+        String urlAux = ALBUMS_URL + "/" + albumId;
+        AlbumDTO response = restTemplate.exchange(urlAux, HttpMethod.GET, entity, AlbumDTO.class).getBody();
+        return response;
+    }
     
 }

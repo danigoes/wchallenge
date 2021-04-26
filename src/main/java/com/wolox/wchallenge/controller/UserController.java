@@ -6,9 +6,11 @@
 package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.dto.UserDTO;
+import com.wolox.wchallenge.exception.DataNotFoundException;
 import com.wolox.wchallenge.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,10 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<UserDTO> response = this.userService.getUsers();
-        return ResponseEntity.ok(response);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 }

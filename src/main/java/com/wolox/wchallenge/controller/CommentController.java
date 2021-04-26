@@ -9,6 +9,7 @@ import com.wolox.wchallenge.dto.CommentDTO;
 import com.wolox.wchallenge.service.CommentService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,26 +24,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/wchallenge/api/comments")
 public class CommentController {
-    
+
     @Autowired
     private CommentService commentService;
-    
+
     @GetMapping()
     public ResponseEntity<List<CommentDTO>> getComments() {
         List<CommentDTO> response = this.commentService.getComments();
-        return ResponseEntity.ok(response);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
-    
+
     @GetMapping("/filterByName")
     public ResponseEntity<List<CommentDTO>> getCommentFilterByName(@RequestBody CommentDTO comment) {
         List<CommentDTO> response = this.commentService.getCommentFilterByName(comment.getName());
-        return ResponseEntity.ok(response);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
-    
+
     @GetMapping("/filterByUserId/{userId}")
     public ResponseEntity<List<CommentDTO>> getCommentFilterByUserId(@PathVariable("userId") String userId) {
         List<CommentDTO> response = this.commentService.getCommentFilterByUserId(userId);
-        return ResponseEntity.ok(response);
+        if (response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
 }

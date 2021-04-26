@@ -8,6 +8,7 @@ package com.wolox.wchallenge.service.implementation;
 import com.wolox.wchallenge.dto.AlbumDTO;
 import com.wolox.wchallenge.dto.PermissionDTO;
 import com.wolox.wchallenge.dto.UserDTO;
+import com.wolox.wchallenge.exception.DataNotFoundException;
 import com.wolox.wchallenge.model.Permission;
 import com.wolox.wchallenge.model.TypePermission;
 import com.wolox.wchallenge.repository.PermissionRepository;
@@ -62,17 +63,23 @@ public class PermissionServiceImpl implements PermissionService {
             response.setTypePermission(typePermission.getTypePermission());
             return response;
         } else {
-            return null;
+            throw new DataNotFoundException("Not found permission to update");
         }
     }
 
     @Override
     public List<UserDTO> getUsersByTypePermissionIdAndAlbumId(Integer typePermissionId, Integer albumId) {
         AlbumDTO album = albumService.getAlbumById(albumId.toString());
+        if (album.getId() == null) {
+            throw new DataNotFoundException("Album data by album id not found");
+        }
         Integer userIdOwner = album.getUserId();
         List<UserDTO> response = new ArrayList();
         //Add the owner of album
         UserDTO userOwner = userService.getUserById(userIdOwner.toString());
+        if (userOwner.getId() == null) {
+            throw new DataNotFoundException("Users data not found");
+        }
         response.add(userOwner);
         //Add the rest of users who has permission on the album
         List<Permission> permissions = permissionRepository.findByAlbumIdAndTypePermissionId(albumId, typePermissionId);

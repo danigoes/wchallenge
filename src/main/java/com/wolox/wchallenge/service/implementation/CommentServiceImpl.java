@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getCommentFilterByName(String name) {
         List<CommentDTO> response = new ArrayList();
         List<CommentDTO> comments = this.getComments();
-        comments.stream().filter((comment) -> (comment.getName().equals(name))).forEachOrdered((comment) -> {
+        comments.stream().filter((comment) -> (comment.getName().contains(name))).forEachOrdered((comment) -> {
             response.add(comment);
         });
         return response;

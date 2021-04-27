@@ -38,8 +38,9 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/filterByName")
-    public ResponseEntity<List<CommentDTO>> getCommentFilterByName(@RequestBody CommentDTO comment) {
+    @GetMapping("/name")
+    public ResponseEntity<List<CommentDTO>> getCommentFilterByName(
+            @RequestBody CommentDTO comment) {
         List<CommentDTO> response = this.commentService.getCommentFilterByName(comment.getName());
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -48,8 +49,9 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/filterByUserId/{userId}")
-    public ResponseEntity<List<CommentDTO>> getCommentFilterByUserId(@PathVariable("userId") String userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<CommentDTO>> getCommentFilterByUserId(
+            @PathVariable("userId") String userId) {
         List<CommentDTO> response = this.commentService.getCommentFilterByUserId(userId);
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

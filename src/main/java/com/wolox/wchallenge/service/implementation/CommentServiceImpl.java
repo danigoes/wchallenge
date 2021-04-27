@@ -25,22 +25,23 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class CommentServiceImpl implements CommentService {
-    
-    @Autowired
-    private RestTemplate restTemplate;
-    
-    @Autowired
-    private PostService postService;
 
     private static final String COMMENTS_URL = "http://jsonplaceholder.typicode.com/comments";
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private PostService postService;
 
     @Override
     public List<CommentDTO> getCommentFilterByName(String name) {
         List<CommentDTO> response = new ArrayList();
         List<CommentDTO> comments = this.getComments();
-        comments.stream().filter((comment) -> (comment.getName().contains(name))).forEachOrdered((comment) -> {
-            response.add(comment);
-        });
+        comments.stream().filter((comment) -> (comment.getName().contains(name)))
+                .forEachOrdered((comment) -> {
+                    response.add(comment);
+                });
         return response;
     }
 
@@ -48,16 +49,18 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getComments() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<CommentDTO> response = Arrays.asList(restTemplate.exchange(COMMENTS_URL, HttpMethod.GET, entity, CommentDTO[].class).getBody());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<CommentDTO> response = Arrays.asList(restTemplate
+                .exchange(COMMENTS_URL, HttpMethod.GET, entity, CommentDTO[].class).getBody());
         return response;
     }
-    
+
     public List<CommentDTO> getCommentsByPostId(String postId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<CommentDTO> response = Arrays.asList(restTemplate.exchange(COMMENTS_URL + "?postId=" + postId, HttpMethod.GET, entity, CommentDTO[].class).getBody());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<CommentDTO> response = Arrays.asList(restTemplate
+                .exchange(COMMENTS_URL + "?postId=" + postId, HttpMethod.GET, entity, CommentDTO[].class).getBody());
         return response;
     }
 
@@ -65,9 +68,10 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getCommentFilterByUserId(String userId) {
         List<CommentDTO> response = new ArrayList();
         List<PostDTO> posts = postService.getPostsByUserId(userId);
-        posts.stream().map((post) -> this.getCommentsByPostId(post.getId().toString())).forEachOrdered((comments) -> {
-            response.addAll(comments);
-        });
+        posts.stream().map((post) -> this.getCommentsByPostId(post.getId().toString()))
+                .forEachOrdered((comments) -> {
+                    response.addAll(comments);
+                });
         return response;
     }
 

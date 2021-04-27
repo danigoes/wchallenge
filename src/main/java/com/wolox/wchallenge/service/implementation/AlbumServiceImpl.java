@@ -22,28 +22,30 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class AlbumServiceImpl implements AlbumService {
-    
+
+    private static final String ALBUMS_URL = "https://jsonplaceholder.typicode.com/albums";
+
     @Autowired
     private RestTemplate restTemplate;
-    
-    private static final String ALBUMS_URL = "https://jsonplaceholder.typicode.com/albums"; 
 
     @Override
     public List<AlbumDTO> getAlbums() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<AlbumDTO> response = Arrays.asList(restTemplate.exchange(ALBUMS_URL, HttpMethod.GET, entity, AlbumDTO[].class).getBody());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<AlbumDTO> response = Arrays.asList(restTemplate
+                .exchange(ALBUMS_URL, HttpMethod.GET, entity, AlbumDTO[].class).getBody());
         return response;
     }
-    
+
     @Override
     public List<AlbumDTO> getAlbumsByUserId(String userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
         String urlAux = ALBUMS_URL + "?userId=" + userId;
-        List<AlbumDTO> response = Arrays.asList(restTemplate.exchange(urlAux, HttpMethod.GET, entity, AlbumDTO[].class).getBody());
+        List<AlbumDTO> response = Arrays.asList(restTemplate
+                .exchange(urlAux, HttpMethod.GET, entity, AlbumDTO[].class).getBody());
         return response;
     }
 
@@ -51,10 +53,11 @@ public class AlbumServiceImpl implements AlbumService {
     public AlbumDTO getAlbumById(String albumId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
         String urlAux = ALBUMS_URL + "/" + albumId;
-        AlbumDTO response = restTemplate.exchange(urlAux, HttpMethod.GET, entity, AlbumDTO.class).getBody();
+        AlbumDTO response = restTemplate
+                .exchange(urlAux, HttpMethod.GET, entity, AlbumDTO.class).getBody();
         return response;
     }
-    
+
 }

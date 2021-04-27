@@ -6,7 +6,6 @@
 package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.dto.PhotoDTO;
-import com.wolox.wchallenge.exception.DataNotFoundException;
 import com.wolox.wchallenge.service.PhotoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +37,9 @@ public class PhotoController {
         }
     }
     
-    @GetMapping("/byAlbumId/{albumId}")
-    public ResponseEntity<List<PhotoDTO>> getPhotosByAlbumId(@PathVariable("albumId") String albumId) {
+    @GetMapping("/album/{albumId}")
+    public ResponseEntity<List<PhotoDTO>> getPhotosByAlbumId(
+            @PathVariable("albumId") String albumId) {
         List<PhotoDTO> response = this.photoService.getPhotos();
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -48,8 +48,9 @@ public class PhotoController {
         }
     }
     
-    @GetMapping("/byUserId/{userId}")
-    public ResponseEntity<List<PhotoDTO>> getPhotosByUserId(@PathVariable("userId") String userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PhotoDTO>> getPhotosByUserId(
+            @PathVariable("userId") String userId) {
         List<PhotoDTO> response = this.photoService.getPhotosByUserId(userId);
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -31,13 +31,13 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
     private AlbumService albumService;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private PermissionRepository permissionRepository;
-        
+
     @Autowired
     private TypePermissionRepository typePermissionRepository;
 
@@ -54,11 +54,13 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission) {
         if (permission.getId() != null) {
-            Permission oldPermission = this.permissionRepository.findById(permission.getId()).get();
+            Permission oldPermission = this.permissionRepository
+                    .findById(permission.getId()).get();
             Permission newPermission = modelMapper.map(oldPermission, Permission.class);
             newPermission.setTypePermissionId(permission.getTypePermissionId());
             newPermission = this.permissionRepository.save(newPermission);
-            TypePermission typePermission = typePermissionRepository.findById(permission.getTypePermissionId()).get();
+            TypePermission typePermission = typePermissionRepository
+                    .findById(permission.getTypePermissionId()).get();
             PermissionDTO response = modelMapper.map(newPermission, PermissionDTO.class);
             response.setTypePermission(typePermission.getTypePermission());
             return response;
@@ -68,24 +70,28 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<UserDTO> getUsersByTypePermissionIdAndAlbumId(Integer typePermissionId, Integer albumId) {
+    public List<UserDTO> getUsersByTypePermissionIdAndAlbumId(
+            Integer typePermissionId, Integer albumId) {
         AlbumDTO album = albumService.getAlbumById(albumId.toString());
         if (album.getId() == null) {
             throw new DataNotFoundException("Album data by album id not found");
         }
         Integer userIdOwner = album.getUserId();
         List<UserDTO> response = new ArrayList();
-        //Add the owner of album
+
         UserDTO userOwner = userService.getUserById(userIdOwner.toString());
         if (userOwner.getId() == null) {
             throw new DataNotFoundException("Users data not found");
         }
         response.add(userOwner);
-        //Add the rest of users who has permission on the album
-        List<Permission> permissions = permissionRepository.findByAlbumIdAndTypePermissionId(albumId, typePermissionId);
-        permissions.stream().map((permission) -> userService.getUserById(permission.getUserId().toString())).forEachOrdered((userExtra) -> {
-            response.add(userExtra);
-        });
+
+        List<Permission> permissions = permissionRepository
+                .findByAlbumIdAndTypePermissionId(albumId, typePermissionId);
+        permissions.stream().map((permission) -> userService
+                .getUserById(permission.getUserId().toString()))
+                .forEachOrdered((userExtra) -> {
+                    response.add(userExtra);
+                });
         return response;
     }
 }

@@ -6,7 +6,6 @@
 package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.dto.UserDTO;
-import com.wolox.wchallenge.exception.DataNotFoundException;
 import com.wolox.wchallenge.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

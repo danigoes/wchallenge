@@ -23,28 +23,30 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class UserServiceImpl implements UserService {
 
+    public static final String USERS_URL = "https://jsonplaceholder.typicode.com/users";
+
     @Autowired
     private RestTemplate restTemplate;
-    
-    public static final String USERS_URL = "https://jsonplaceholder.typicode.com/users";//"https://jsonplaceholder.cypress.io/users";//
-    
+
     @Override
     public List<UserDTO> getUsers() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<UserDTO> response = Arrays.asList(restTemplate.exchange(USERS_URL, HttpMethod.GET, entity, UserDTO[].class).getBody());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<UserDTO> response = Arrays.asList(restTemplate
+                .exchange(USERS_URL, HttpMethod.GET, entity, UserDTO[].class).getBody());
         return response;
-    } 
+    }
 
     @Override
     public UserDTO getUserById(String userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
         String urlAux = USERS_URL + "/" + userId;
-        UserDTO response = restTemplate.exchange(urlAux, HttpMethod.GET, entity, UserDTO.class).getBody();
+        UserDTO response = restTemplate
+                .exchange(urlAux, HttpMethod.GET, entity, UserDTO.class).getBody();
         return response;
     }
-    
+
 }

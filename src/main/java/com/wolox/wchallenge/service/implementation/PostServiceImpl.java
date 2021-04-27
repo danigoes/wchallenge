@@ -22,19 +22,20 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class PostServiceImpl implements PostService {
-    
+
+    public static final String POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+
     @Autowired
     private RestTemplate restTemplate;
-    
-    public static final String POSTS_URL = "https://jsonplaceholder.typicode.com/posts";//"https://jsonplaceholder.cypress.io/users";//
 
     @Override
     public List<PostDTO> getPostsByUserId(String userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
-	HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<PostDTO> response = Arrays.asList(restTemplate.exchange(POSTS_URL + "?userId=" + userId, HttpMethod.GET, entity, PostDTO[].class).getBody());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        List<PostDTO> response = Arrays.asList(restTemplate
+                .exchange(POSTS_URL + "?userId=" + userId, HttpMethod.GET, entity, PostDTO[].class).getBody());
         return response;
     }
-    
+
 }

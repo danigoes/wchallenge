@@ -32,8 +32,9 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @PostMapping("/createPermissionSharedAlbum")
-    public ResponseEntity<PermissionDTO> createPermissionSharedAlbum(@RequestBody PermissionDTO permission) {
+    @PostMapping()
+    public ResponseEntity<PermissionDTO> createPermissionSharedAlbum(
+            @RequestBody PermissionDTO permission) {
         PermissionDTO response = permissionService.createPermissionSharedAlbum(permission);
         if (response == null) {
             throw new ApiRequestException("Cannot create permission of shared album");
@@ -42,8 +43,9 @@ public class PermissionController {
         }
     }
 
-    @PutMapping("/updateTypePermissionSharedAlbum")
-    public ResponseEntity<PermissionDTO> updateTypePermissionSharedAlbum(@RequestBody PermissionDTO permission) {
+    @PutMapping()
+    public ResponseEntity<PermissionDTO> updateTypePermissionSharedAlbum(
+            @RequestBody PermissionDTO permission) {
         PermissionDTO response = permissionService.updateTypePermissionSharedAlbum(permission);
         if (response == null) {
             throw new ApiRequestException("Cannot update permission of shared album");
@@ -52,11 +54,12 @@ public class PermissionController {
         }
     }
 
-    @GetMapping("/users/ByTypePermissionId/{typePermissionId}/ByAlbumId/{albumId}")
+    @GetMapping("/users/type/{typePermissionId}/album/{albumId}")
     public ResponseEntity<List<UserDTO>> getUsersByTypePermissionIdAndAlbumId(
             @PathVariable("typePermissionId") Integer typePermissionId,
             @PathVariable("albumId") Integer albumId) {
-        List<UserDTO> response = permissionService.getUsersByTypePermissionIdAndAlbumId(typePermissionId, albumId);
+        List<UserDTO> response = permissionService
+                .getUsersByTypePermissionIdAndAlbumId(typePermissionId, albumId);
         if (response == null) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {

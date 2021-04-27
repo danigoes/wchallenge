@@ -8,7 +8,6 @@ package com.wolox.wchallenge.controller;
 import com.wolox.wchallenge.dto.AlbumDTO;
 import com.wolox.wchallenge.service.AlbumService;
 import java.util.List;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class AlbumController {
     private AlbumService albumService;
 
     @GetMapping()
-    public ResponseEntity<List<AlbumDTO>> getAlbums() throws NotFoundException {
+    public ResponseEntity<List<AlbumDTO>> getAlbums() {
         List<AlbumDTO> response = albumService.getAlbums();
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -38,8 +37,9 @@ public class AlbumController {
         }
     }
 
-    @GetMapping("/byUserId/{userId}")
-    public ResponseEntity<List<AlbumDTO>> getAlbumsByUserId(@PathVariable("userId") String userId) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<AlbumDTO>> getAlbumsByUserId(
+            @PathVariable("userId") String userId) {
         List<AlbumDTO> response = albumService.getAlbumsByUserId(userId);
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

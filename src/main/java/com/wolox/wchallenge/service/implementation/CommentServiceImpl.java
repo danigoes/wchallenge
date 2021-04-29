@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getCommentFilterByName(String name) {
-        log.info("Getting all comments filtered by name");
+        log.info("Getting all comments filtered by name {}", name);
         List<CommentDTO> response = new ArrayList();
         List<CommentDTO> comments = this.getComments();
         comments.stream().filter((comment) -> (comment.getName().contains(name)))
@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public List<CommentDTO> getCommentsByPostId(String postId) {
-        log.info("Getting all comments by post id");
+        log.info("Getting all comments by post id {}", postId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getCommentFilterByUserId(String userId) {
-        log.info("Getting all comments filtered by user id");
+        log.info("Getting all comments filtered by user id {}", userId);
         List<CommentDTO> response = new ArrayList();
         List<PostDTO> posts = postService.getPostsByUserId(userId);
         posts.stream().map((post) -> getCommentsByPostId(post.getId().toString()))

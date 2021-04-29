@@ -27,8 +27,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class AlbumControllerTest {
 
-    private static final AlbumDTO albumGet = new AlbumDTO(1, 1, "album test");
-
     @InjectMocks
     private AlbumController albumController;
 
@@ -41,6 +39,7 @@ public class AlbumControllerTest {
 
     @Test
     public void getAlbums_ReturnOK() {
+        AlbumDTO albumGet = new AlbumDTO(1, 1, "album test");
         List<AlbumDTO> albums = new ArrayList<>();
         AlbumDTO album = new AlbumDTO(
                 albumGet.getId(),

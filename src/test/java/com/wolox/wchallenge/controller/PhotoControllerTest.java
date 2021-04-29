@@ -27,8 +27,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class PhotoControllerTest {
 
-    private static final PhotoDTO photoGet = new PhotoDTO(1, 1, "photo title", "photo url", "photo thumbnailUrl");
-
     @InjectMocks
     private PhotoController photoController;
 
@@ -41,6 +39,7 @@ public class PhotoControllerTest {
 
     @Test
     public void getPhotos_ReturnOK() {
+        PhotoDTO photoGet = new PhotoDTO(1, 1, "photo title", "photo url", "photo thumbnailUrl");
         List<PhotoDTO> photos = new ArrayList<>();
         PhotoDTO photo = new PhotoDTO(
                 photoGet.getId(),

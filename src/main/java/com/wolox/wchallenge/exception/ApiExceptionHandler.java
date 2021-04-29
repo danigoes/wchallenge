@@ -49,7 +49,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
                 e.getMessage(), 
                 HttpStatus.NOT_FOUND, 
                 ZonedDateTime.now(ZoneId.of("Z")));
-        return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
     }
 
 }

@@ -130,53 +130,6 @@ public class PermissionControllerTest {
                 .getUsersByTypePermissionIdAndAlbumId(typePermissionId, albumId);
         assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
     }
-    
-    @Test(expected = Exception.class)
-    public void updateTypePermissionSharedAlbum_ReturnHandleAllExceptionHandler() throws Exception  {
-        ApiException exception = new ApiException();
-        exception.setMessage("Something went wrong!");
-        exception.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        exception.setTimestamp(ZonedDateTime.now(ZoneId.of("Z")));
-        PermissionDTO permissionBody = new PermissionDTO();
-        when(permissionService.updateTypePermissionSharedAlbum(permissionBody))
-                .thenThrow(Exception.class);
-        ResponseEntity<PermissionDTO> result = permissionController
-                .updateTypePermissionSharedAlbum(permissionBody);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-    }
-    
-     @Test(expected = DataNotFoundException.class)
-    public void updateTypePermissionSharedAlbum_ReturnHandleDataNotFoundException() throws Exception  {
-        DataNotFoundException dataNotFound = new DataNotFoundException("Not found permission to update");
-        ApiException exception = new ApiException();
-        exception.setMessage(dataNotFound.getMessage());
-        exception.setHttpStatus(HttpStatus.NOT_FOUND);
-        exception.setTimestamp(ZonedDateTime.now(ZoneId.of("Z")));
-        PermissionDTO permissionBody = new PermissionDTO();
-        
-        when(permissionService.updateTypePermissionSharedAlbum(permissionBody))
-                 .thenThrow(DataNotFoundException.class);
-        
-        ResponseEntity<PermissionDTO> result = permissionController
-                .updateTypePermissionSharedAlbum(permissionBody);
-        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-    }
-    
-    @Test(expected = ApiRequestException.class)
-    public void updateTypePermissionSharedAlbum_ReturnApiRequestException() throws Exception{
-        PermissionDTO permissionBody = new PermissionDTO();
-        ApiException exceptionTest = new ApiException("Cannot update permission of shared album", HttpStatus.BAD_REQUEST, ZonedDateTime.now(ZoneId.of("Z")));
-        ApiException exception = new ApiException();
-        exception.setMessage(exceptionTest.getMessage());
-        exception.setHttpStatus(exceptionTest.getHttpStatus());
-        exception.setTimestamp(exceptionTest.getTimestamp());
-        when(permissionService.updateTypePermissionSharedAlbum(permissionBody))
-                .thenThrow(ApiRequestException.class);
-        ResponseEntity<PermissionDTO> result = permissionController
-                .updateTypePermissionSharedAlbum(permissionBody);
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-    }
-    
-    
+       
     
 }

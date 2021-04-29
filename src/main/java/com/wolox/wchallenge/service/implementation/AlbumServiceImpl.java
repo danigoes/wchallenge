@@ -46,7 +46,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<AlbumDTO> getAlbumsByUserId(String userId) {
-        log.info("Getting all albums by user id");
+        log.info("Getting all albums by user id {}", userId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -58,7 +58,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDTO getAlbumById(String albumId) {
-        log.info("Getting all albums by album id");
+        log.info("Getting all albums by album id {}", albumId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);

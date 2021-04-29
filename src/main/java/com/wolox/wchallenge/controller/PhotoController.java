@@ -47,7 +47,7 @@ public class PhotoController {
         }
     }
     
-    @ApiOperation(value = "Get list of photos by album identification")
+    @ApiOperation(value = "Get photos for a specific album")
     @GetMapping("/album/{albumId}")
     public ResponseEntity<List<PhotoDTO>> getPhotosByAlbumId(
             @ApiParam( value = "Album identification", required = true) 
@@ -58,12 +58,12 @@ public class PhotoController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Photos obtained successfully");
+            log.info("Photos by album id {} obtained successfully", albumId);
             return ResponseEntity.ok(response);
         }
     }
     
-    @ApiOperation(value = "Get list of photos by user identification")
+    @ApiOperation(value = "Get photos for a specific user")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<PhotoDTO>> getPhotosByUserId(
             @ApiParam( value = "User identification", required = true) 
@@ -74,7 +74,7 @@ public class PhotoController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Photos obtained successfully");
+            log.info("Photos by user id {} obtained successfully", userId);
             return ResponseEntity.ok(response);
         }
     }

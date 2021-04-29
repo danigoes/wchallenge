@@ -48,7 +48,7 @@ public class CommentController {
         }
     }
 
-    @ApiOperation(value = "Get list of comments filtered by name")
+    @ApiOperation(value = "Get comments filtered by name")
     @GetMapping("/name")
     public ResponseEntity<List<CommentDTO>> getCommentFilterByName(
             @ApiParam( value = "Object of type Comment", required = true) 
@@ -59,12 +59,12 @@ public class CommentController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Comments obtained successfully");
+            log.info("Comments filteres by name {} obtained successfully", comment.getName());
             return ResponseEntity.ok(response);
         }
     }
 
-    @ApiOperation(value = "Get list of comments filtered by user identification")
+    @ApiOperation(value = "Get comments filtered by user identification")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<CommentDTO>> getCommentFilterByUserId(
             @ApiParam( value = "User identification", required = true) 
@@ -75,7 +75,7 @@ public class CommentController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Comments obtained successfully");
+            log.info("Comments filtered by user id {} obtained successfully", userId);
             return ResponseEntity.ok(response);
         }
     }

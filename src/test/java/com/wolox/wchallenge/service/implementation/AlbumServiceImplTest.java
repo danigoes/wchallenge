@@ -37,9 +37,6 @@ public class AlbumServiceImplTest {
     
     @InjectMocks
     private AlbumServiceImpl albumService;
-       
-    public AlbumServiceImplTest() {
-    }
     
     @Test
     public void getAlbums_ReturnOK() {

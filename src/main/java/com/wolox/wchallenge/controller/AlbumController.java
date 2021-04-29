@@ -47,7 +47,7 @@ public class AlbumController {
         }
     }
 
-    @ApiOperation(value = "Get album by user identification")
+    @ApiOperation(value = "Get album for a specific user")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<AlbumDTO>> getAlbumsByUserId(
             @ApiParam( value = "User identification", required = true) 
@@ -58,7 +58,7 @@ public class AlbumController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Albums successfully obtained");
+            log.info("Albums by user id {} successfully obtained", userId);
             return ResponseEntity.ok(response);
         }
     }

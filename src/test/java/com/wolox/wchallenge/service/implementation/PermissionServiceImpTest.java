@@ -10,7 +10,6 @@ import com.wolox.wchallenge.dto.AlbumDTO;
 import com.wolox.wchallenge.dto.CompanyDTO;
 import com.wolox.wchallenge.dto.PermissionDTO;
 import com.wolox.wchallenge.dto.UserDTO;
-import com.wolox.wchallenge.exception.ApiRequestException;
 import com.wolox.wchallenge.exception.DataNotFoundException;
 import com.wolox.wchallenge.model.Permission;
 import com.wolox.wchallenge.model.TypePermission;

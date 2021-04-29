@@ -27,8 +27,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class CommentControllerTest {
 
-    private static final CommentDTO commentGet = new CommentDTO(1, 1, "quo", "email comment test", "body comment test");
-
     @InjectMocks
     private CommentController commentController;
 
@@ -41,6 +39,7 @@ public class CommentControllerTest {
 
     @Test
     public void getComments_ReturnOK() {
+        CommentDTO commentGet = new CommentDTO(1, 1, "quo", "email comment test", "body comment test");
         List<CommentDTO> comments = new ArrayList<>();
         CommentDTO comment = new CommentDTO(
                 commentGet.getId(),

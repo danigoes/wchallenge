@@ -84,7 +84,8 @@ public class PermissionController {
             log.info("No content");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            log.info("Users obtained successfully");
+            log.info("Users by type permission id {} and album id {} obtained successfully", 
+                    typePermissionId, albumId);
             return ResponseEntity.ok(response);
         }
     }

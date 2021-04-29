@@ -42,9 +42,6 @@ public class CommentServiceImplTest {
     @InjectMocks
     private CommentServiceImpl commentService;
 
-    public CommentServiceImplTest() {
-    }
-
     @Test
     public void getCommentFilterByName_ReturnOK() {
         String name = "name";

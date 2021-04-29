@@ -52,7 +52,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public List<PhotoDTO> getPhotosByAlbumId(String albumId) {
-        log.info("Getting photos by album id");
+        log.info("Getting photos by album id {}", albumId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -64,7 +64,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public List<PhotoDTO> getPhotosByUserId(String userId) {
-        log.info("Getting photos by user id");
+        log.info("Getting photos by user id {}", userId);
         List<PhotoDTO> response = new ArrayList();
         List<AlbumDTO> albums = albumService.getAlbumsByUserId(userId);
         albums.stream().map((album) -> getPhotosByAlbumId(album.getId().toString()))

@@ -29,8 +29,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class UserContollerTest {
 
-    private static final UserDTO userGet = new UserDTO(1, "user name", "user username", "user email", new AddressDTO(), "user phone", "user website", new CompanyDTO());
-
     @InjectMocks
     private UserController userController;
 
@@ -44,6 +42,9 @@ public class UserContollerTest {
     @Test
     public void getUsers_ReturnOK() {
         List<UserDTO> users = new ArrayList<>();
+        UserDTO userGet = new UserDTO(1, "user name", "user username", 
+                "user email", new AddressDTO(), "user phone", "user website", 
+                new CompanyDTO());
         UserDTO user = new UserDTO(
                 userGet.getId(),
                 userGet.getName(),

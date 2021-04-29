@@ -76,7 +76,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<UserDTO> getUsersByTypePermissionIdAndAlbumId(
             Integer typePermissionId, Integer albumId) {
-        log.info("Getting all users");
+        log.info("Getting all users by type permission id {} and album id {}", typePermissionId, albumId);
         AlbumDTO album = albumService.getAlbumById(albumId.toString());
         if (album.getId() == null) {
             log.error("Album data by album id not found");

@@ -34,9 +34,6 @@ import org.springframework.web.client.RestTemplate;
 public class UserServiceImplTest {
     
     public static final String USERS_URL = "https://jsonplaceholder.typicode.com/users";
-    public static final GeoDTO geo = new GeoDTO("lat", "lng");
-    public static final AddressDTO address = new AddressDTO("street", "suite", "city", "zipcode", geo);
-    public static final CompanyDTO company = new CompanyDTO("name", "catchPhrase", "bs");
     
     @Mock
     private RestTemplate restTemplate;
@@ -47,6 +44,7 @@ public class UserServiceImplTest {
     @Test
     public void getUsersTest() {
         List<UserDTO> users = new ArrayList();
+        GeoDTO geo = new GeoDTO("lat", "lng");
         GeoDTO geo1 = new GeoDTO();
         geo1.setLat(geo.getLat());
         geo1.setLng(geo.getLng());
@@ -87,12 +85,14 @@ public class UserServiceImplTest {
         GeoDTO geo1 = new GeoDTO();
         geo1.setLat("lat");
         geo1.setLng("lng");
+        AddressDTO address = new AddressDTO("street", "suite", "city", "zipcode", geo1);
         AddressDTO address1 = new AddressDTO();
         address1.setStreet(address.getStreet());
         address1.setCity(address.getCity());
         address1.setSuite(address.getSuite());
         address1.setZipcode(address.getZipcode());
         address1.setGeo(address.getGeo());
+        CompanyDTO company = new CompanyDTO("name", "catchPhrase", "bs");
         CompanyDTO company1 = new CompanyDTO();
         company1.setName(company.getName());
         company1.setCatchPhrase(company.getCatchPhrase());

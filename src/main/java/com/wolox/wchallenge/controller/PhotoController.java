@@ -29,7 +29,7 @@ public class PhotoController {
     
     @GetMapping()
     public ResponseEntity<List<PhotoDTO>> getPhotos() {
-        List<PhotoDTO> response = this.photoService.getPhotos();
+        List<PhotoDTO> response = photoService.getPhotos();
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
@@ -40,7 +40,7 @@ public class PhotoController {
     @GetMapping("/album/{albumId}")
     public ResponseEntity<List<PhotoDTO>> getPhotosByAlbumId(
             @PathVariable("albumId") String albumId) {
-        List<PhotoDTO> response = this.photoService.getPhotos();
+        List<PhotoDTO> response = this.photoService.getPhotosByAlbumId(albumId);
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {

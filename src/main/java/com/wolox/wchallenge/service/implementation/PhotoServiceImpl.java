@@ -10,12 +10,13 @@ import com.wolox.wchallenge.dto.PhotoDTO;
 import com.wolox.wchallenge.service.AlbumService;
 import com.wolox.wchallenge.service.PhotoService;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +28,9 @@ import org.springframework.web.client.RestTemplate;
 public class PhotoServiceImpl implements PhotoService {
 
     private static final String PHOTOS_URL = "https://jsonplaceholder.typicode.com/photos";
-
+    private static final ParameterizedTypeReference<List<PhotoDTO>> typeRef = 
+                new ParameterizedTypeReference<List<PhotoDTO>>() {};
+    
     @Autowired
     private RestTemplate restTemplate;
 
@@ -39,9 +42,9 @@ public class PhotoServiceImpl implements PhotoService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<PhotoDTO> response = Arrays.asList(restTemplate
-                .exchange(PHOTOS_URL, HttpMethod.GET, entity, PhotoDTO[].class).getBody());
-        return response;
+        ResponseEntity<List<PhotoDTO>> response = restTemplate
+                .exchange(PHOTOS_URL, HttpMethod.GET, entity, typeRef);
+        return response.getBody();
     }
 
     @Override
@@ -50,16 +53,16 @@ public class PhotoServiceImpl implements PhotoService {
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
         String urlAux = PHOTOS_URL + "?albumId=" + albumId;
-        List<PhotoDTO> response = Arrays.asList(restTemplate
-                .exchange(urlAux, HttpMethod.GET, entity, PhotoDTO[].class).getBody());
-        return response;
+        ResponseEntity<List<PhotoDTO>> response = restTemplate
+                .exchange(urlAux, HttpMethod.GET, entity, typeRef);
+        return response.getBody();
     }
 
     @Override
     public List<PhotoDTO> getPhotosByUserId(String userId) {
         List<PhotoDTO> response = new ArrayList();
         List<AlbumDTO> albums = albumService.getAlbumsByUserId(userId);
-        albums.stream().map((album) -> this.getPhotosByAlbumId(album.getId().toString()))
+        albums.stream().map((album) -> getPhotosByAlbumId(album.getId().toString()))
                 .forEachOrdered((photos) -> {
                     photos.forEach((photo) -> {
                         response.add(photo);

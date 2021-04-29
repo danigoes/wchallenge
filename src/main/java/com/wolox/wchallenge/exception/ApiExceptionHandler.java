@@ -11,16 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  *
  * @author Daniela
  */
 @ControllerAdvice
-public class ApiExceptionHandler {
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
-    @ExceptionHandler(value =  {ApiRequestException.class})
+    @ExceptionHandler(ApiRequestException.class)
     public ResponseEntity<Object> handleApiRequestException(ApiRequestException e) {
         ApiException apiException = new ApiException(
                 e.getMessage(),
@@ -30,14 +30,20 @@ public class ApiExceptionHandler {
     }
     
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        ApiException error = new ApiException("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR,  ZonedDateTime.now(ZoneId.of("Z")));
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
+        ApiException error = new ApiException(
+                "Something went wrong!", 
+                HttpStatus.INTERNAL_SERVER_ERROR, 
+                ZonedDateTime.now(ZoneId.of("Z")));
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
  
-    @ExceptionHandler(value = {DataNotFoundException.class})
+    @ExceptionHandler(DataNotFoundException.class)
     public final ResponseEntity<Object> handleDataNotFoundException(DataNotFoundException e) {
-        ApiException error = new ApiException(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now(ZoneId.of("Z")));
+        ApiException error = new ApiException(
+                e.getMessage(), 
+                HttpStatus.NOT_FOUND, 
+                ZonedDateTime.now(ZoneId.of("Z")));
         return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
     }
 

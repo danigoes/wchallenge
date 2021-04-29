@@ -47,18 +47,17 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PermissionDTO createPermissionSharedAlbum(PermissionDTO permission) {
         Permission permissionAux = modelMapper.map(permission, Permission.class);
-        permissionAux = this.permissionRepository.save(permissionAux);
+        permissionAux = permissionRepository.save(permissionAux);
         return modelMapper.map(permissionAux, PermissionDTO.class);
     }
 
     @Override
     public PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission) {
         if (permission.getId() != null) {
-            Permission oldPermission = this.permissionRepository
+            Permission newPermission = this.permissionRepository
                     .findById(permission.getId()).get();
-            Permission newPermission = modelMapper.map(oldPermission, Permission.class);
             newPermission.setTypePermissionId(permission.getTypePermissionId());
-            newPermission = this.permissionRepository.save(newPermission);
+            newPermission = permissionRepository.save(newPermission);
             TypePermission typePermission = typePermissionRepository
                     .findById(permission.getTypePermissionId()).get();
             PermissionDTO response = modelMapper.map(newPermission, PermissionDTO.class);
@@ -81,7 +80,7 @@ public class PermissionServiceImpl implements PermissionService {
 
         UserDTO userOwner = userService.getUserById(userIdOwner.toString());
         if (userOwner.getId() == null) {
-            throw new DataNotFoundException("Users data not found");
+            throw new DataNotFoundException("User data not found");
         }
         response.add(userOwner);
 

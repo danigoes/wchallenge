@@ -7,12 +7,13 @@ package com.wolox.wchallenge.service.implementation;
 
 import com.wolox.wchallenge.dto.PostDTO;
 import com.wolox.wchallenge.service.PostService;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class PostServiceImpl implements PostService {
 
-    public static final String POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+    private static final String POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+    private static final ParameterizedTypeReference<List<PostDTO>> typeRef = 
+                new ParameterizedTypeReference<List<PostDTO>>() {};
 
     @Autowired
     private RestTemplate restTemplate;
@@ -33,9 +36,10 @@ public class PostServiceImpl implements PostService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        List<PostDTO> response = Arrays.asList(restTemplate
-                .exchange(POSTS_URL + "?userId=" + userId, HttpMethod.GET, entity, PostDTO[].class).getBody());
-        return response;
+        String url = POSTS_URL + "?userId=" + userId;
+        ResponseEntity<List<PostDTO>> response = restTemplate
+                .exchange(url, HttpMethod.GET, entity, typeRef);
+        return response.getBody();
     }
 
 }

@@ -28,7 +28,7 @@ public class UserController {
     
     @GetMapping()
     public ResponseEntity<List<UserDTO>> getUsers() {
-        List<UserDTO> response = this.userService.getUsers();
+        List<UserDTO> response = userService.getUsers();
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {

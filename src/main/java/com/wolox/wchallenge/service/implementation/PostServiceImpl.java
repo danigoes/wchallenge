@@ -8,6 +8,7 @@ package com.wolox.wchallenge.service.implementation;
 import com.wolox.wchallenge.dto.PostDTO;
 import com.wolox.wchallenge.service.PostService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Daniela
  */
+@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -33,6 +35,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getPostsByUserId(String userId) {
+        log.info("Getting posts by user id");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);

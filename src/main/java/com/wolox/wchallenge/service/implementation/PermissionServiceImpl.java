@@ -18,6 +18,7 @@ import com.wolox.wchallenge.service.PermissionService;
 import com.wolox.wchallenge.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Daniela
  */
+@Slf4j
 @Service
 public class PermissionServiceImpl implements PermissionService {
 
@@ -46,6 +48,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDTO createPermissionSharedAlbum(PermissionDTO permission) {
+        log.info("Creating the permission");
         Permission permissionAux = modelMapper.map(permission, Permission.class);
         permissionAux = permissionRepository.save(permissionAux);
         return modelMapper.map(permissionAux, PermissionDTO.class);
@@ -53,6 +56,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission) {
+        log.info("Updating the permission");
         if (permission.getId() != null) {
             Permission newPermission = this.permissionRepository
                     .findById(permission.getId()).get();
@@ -64,6 +68,7 @@ public class PermissionServiceImpl implements PermissionService {
             response.setTypePermission(typePermission.getTypePermission());
             return response;
         } else {
+            log.error("Not found permission to update");
             throw new DataNotFoundException("Not found permission to update");
         }
     }
@@ -71,8 +76,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<UserDTO> getUsersByTypePermissionIdAndAlbumId(
             Integer typePermissionId, Integer albumId) {
+        log.info("Getting all users");
         AlbumDTO album = albumService.getAlbumById(albumId.toString());
         if (album.getId() == null) {
+            log.error("Album data by album id not found");
             throw new DataNotFoundException("Album data by album id not found");
         }
         Integer userIdOwner = album.getUserId();
@@ -80,6 +87,7 @@ public class PermissionServiceImpl implements PermissionService {
 
         UserDTO userOwner = userService.getUserById(userIdOwner.toString());
         if (userOwner.getId() == null) {
+            log.error("User data not found");
             throw new DataNotFoundException("User data not found");
         }
         response.add(userOwner);

@@ -8,6 +8,7 @@ package com.wolox.wchallenge.service.implementation;
 import com.wolox.wchallenge.dto.AlbumDTO;
 import com.wolox.wchallenge.service.AlbumService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Daniela
  */
+@Slf4j
 @Service
 public class AlbumServiceImpl implements AlbumService {
 
@@ -33,6 +35,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<AlbumDTO> getAlbums() {
+        log.info("Getting all albums");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -43,6 +46,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public List<AlbumDTO> getAlbumsByUserId(String userId) {
+        log.info("Getting all albums by user id");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -54,6 +58,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDTO getAlbumById(String albumId) {
+        log.info("Getting all albums by album id");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);

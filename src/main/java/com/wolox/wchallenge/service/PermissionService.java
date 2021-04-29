@@ -17,5 +17,5 @@ public interface PermissionService {
     
     PermissionDTO createPermissionSharedAlbum(PermissionDTO permission);
     PermissionDTO updateTypePermissionSharedAlbum(PermissionDTO permission);
-    List<UserDTO> getUsersByTypePermissionIdAndAlbumId(Integer typePermissionId, Integer albumId); 
+    List<UserDTO> getUsersByTypePermissionIdAndAlbumId(Integer typePermissionId, Integer albumId);
 }

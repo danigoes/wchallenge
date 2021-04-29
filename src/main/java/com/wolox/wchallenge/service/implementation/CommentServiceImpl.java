@@ -11,6 +11,7 @@ import com.wolox.wchallenge.service.CommentService;
 import com.wolox.wchallenge.service.PostService;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Daniela
  */
+@Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -39,6 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getCommentFilterByName(String name) {
+        log.info("Getting all comments filtered by name");
         List<CommentDTO> response = new ArrayList();
         List<CommentDTO> comments = this.getComments();
         comments.stream().filter((comment) -> (comment.getName().contains(name)))
@@ -50,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getComments() {
+        log.info("Getting all comments");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -59,6 +63,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public List<CommentDTO> getCommentsByPostId(String postId) {
+        log.info("Getting all comments by post id");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -70,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> getCommentFilterByUserId(String userId) {
+        log.info("Getting all comments filtered by user id");
         List<CommentDTO> response = new ArrayList();
         List<PostDTO> posts = postService.getPostsByUserId(userId);
         posts.stream().map((post) -> getCommentsByPostId(post.getId().toString()))

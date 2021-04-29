@@ -8,6 +8,7 @@ package com.wolox.wchallenge.service.implementation;
 import com.wolox.wchallenge.dto.UserDTO;
 import com.wolox.wchallenge.service.UserService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Daniela
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getUsers() {
+        log.info("Getting users");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -43,6 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(String userId) {
+        log.info("Getting users by id");
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "Application");
         HttpEntity<String> entity = new HttpEntity<>(headers);
